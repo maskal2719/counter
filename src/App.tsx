@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, RefObject, useRef, useState} from 'react';
 import './App.css';
 import {Display} from './components/Display/Display';
 import {SuperButton} from "./components/SuperButton/SuperButton";
@@ -7,12 +7,12 @@ import {SuperButton} from "./components/SuperButton/SuperButton";
 function App() {
 
 
-    const minCount = 0
 
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState<number>(0)
+    const [min, setMinCount] = useState<number>(0)
     const [maxCount, setMaxCount] = useState<number>(5)
     const isDisableIcn = count >= maxCount
-    const isDisableReset = count === minCount
+    const isDisableReset = count === min
 
 
     const inc = () => {
@@ -21,20 +21,26 @@ function App() {
         }
     }
     const reset = () => {
-        setCount(0)
+        setCount(min)
     }
 
-    const setMaxCounter = (maxCount: number) => {
-        setMaxCount(maxCount)
+    const setMinInputCount = (e: ChangeEvent<HTMLInputElement>) => {
+        setMinCount(+e.currentTarget.value)
     }
-    const onChangeMaxCountHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setMaxCounter(+e.currentTarget.value)
+
+    const setMaxInputCount = (e: ChangeEvent<HTMLInputElement>) => {
+        setMaxCount(+e.currentTarget.value)
     }
+
+    const onClickHandler = () => {
+        setCount(min)
+    }
+
 
     return (
         <>
             <div className="container">
-                <Display count={count}/>
+                <Display count={count} maxCount={maxCount}/>
                 {/*{count >= 5 && <div className={'err'}>Error</div> }*/}
                 <div className={'btn-container'}>
                     <SuperButton name={'Inc'} callBack={inc} isDisable={isDisableIcn}/>
@@ -44,13 +50,13 @@ function App() {
             <div className={'setting'}>
                 <h2>Settings</h2>
                 <div>
-                    Start count:<input onChange={onChangeMaxCountHandler} className={'input'} type="number"/>
+                    Start count:<input value={min} onChange={setMinInputCount} className={'input'} type="number"/>
                 </div>
                 <div>
-                    Max count:<input onChange={(e) => console.log(e.currentTarget.value)} className={'input'} type="number"/>
+                    Max count:<input value={maxCount} onChange={setMaxInputCount} className={'input'} type="number"/>
                 </div>
                 <div className={'btn-container'}>
-                    <SuperButton name={'Set'} callBack={() => {}} isDisable={false}/>
+                    <SuperButton name={'Set'} callBack={onClickHandler} isDisable={false}/>
                 </div>
             </div>
         </>
