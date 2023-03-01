@@ -44,7 +44,7 @@ function App() {
             <div className={'setting'}>
                 <h2>Settings</h2>
                 <div>
-                    Max count:<input onChange={onChangeMaxCountHandler} className={'input'} type="number"/>
+                    Start count:<input onChange={onChangeMaxCountHandler} className={'input'} type="number"/>
                 </div>
                 <div>
                     Max count:<input onChange={(e) => console.log(e.currentTarget.value)} className={'input'} type="number"/>
