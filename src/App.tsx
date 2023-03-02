@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import './App.css';
 import Counter from "./components/Counter/Counter";
 import Setting from "./components/Setting/Setting";
@@ -8,7 +8,7 @@ function App() {
     const errMessage = 'Error'
 
     const [count, setCount] = useState<number>(0)
-    const [minCount, setMinCountCount] = useState<number>(0)
+    const [minCount, setMinCount] = useState<number>(0)
     const [maxCount, setMaxCount] = useState<number>(5)
     const [error, setError] = useState<boolean>(false)
     const [disabledDisplay, setDisabledDisplay] = useState<boolean>(false)
@@ -29,8 +29,8 @@ function App() {
     const setMinInputCount = (e: ChangeEvent<HTMLInputElement>) => {
         const newMinCount = (+e.currentTarget.value)
         setDisabledDisplay(true)
-        newMinCount >= maxCount ? setError(true) : setError(false)
-        setMinCountCount(+e.currentTarget.value)
+        newMinCount >= maxCount || newMinCount < 0 ? setError(true) : setError(false)
+        setMinCount(+e.currentTarget.value)
     }
     const setMaxInputCount = (e: ChangeEvent<HTMLInputElement>) => {
         const newMaxCount = (+e.currentTarget.value)
@@ -41,8 +41,20 @@ function App() {
 
     const setNewValues = () => {
         setCount(minCount)
+        localStorage.setItem('minCount',JSON.stringify(minCount))
+        localStorage.setItem('maxCount',JSON.stringify(maxCount))
         setDisabledDisplay(false)
     }
+
+    useEffect(() => {
+        let minCountLS = localStorage.getItem('minCount')
+        let maxCountLS = localStorage.getItem('maxCount')
+        if(minCountLS && maxCountLS) {
+            setMinCount(JSON.parse(minCountLS))
+            setCount(JSON.parse(minCountLS))
+            setMaxCount(JSON.parse(maxCountLS))
+        }
+    },[])
 
     return (
         <>
@@ -55,6 +67,7 @@ function App() {
                      isDisableIcn={isDisableIcn}
                      isDisableReset={isDisableReset}
                      maxCount={maxCount}/>
+
             <Setting maxCount={maxCount}
                      minCount={minCount}
                      isDisableSet={isDisableSet}
