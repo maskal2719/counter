@@ -1,8 +1,7 @@
 import React, {ChangeEvent, useState} from 'react';
 import './App.css';
-import {Display} from './components/Display/Display';
-import {SuperButton} from "./components/SuperButton/SuperButton";
-
+import Counter from "./components/Counter/Counter";
+import Setting from "./components/Setting/Setting";
 
 function App() {
 
@@ -17,7 +16,7 @@ function App() {
     const isDisableIcn = count >= maxCount || disabledDisplay
     const isDisableReset = count === minCount || disabledDisplay
     const isDisableSet = !disabledDisplay || error
-
+    const errorInputClass = error ? 'input_error' : '';
 
     const inc = () => {
         if (count < maxCount) {
@@ -27,14 +26,12 @@ function App() {
     const reset = () => {
         setCount(minCount)
     }
-
     const setMinInputCount = (e: ChangeEvent<HTMLInputElement>) => {
         const newMinCount = (+e.currentTarget.value)
         setDisabledDisplay(true)
         newMinCount >= maxCount ? setError(true) : setError(false)
         setMinCountCount(+e.currentTarget.value)
     }
-
     const setMaxInputCount = (e: ChangeEvent<HTMLInputElement>) => {
         const newMaxCount = (+e.currentTarget.value)
         setDisabledDisplay(true)
@@ -42,36 +39,29 @@ function App() {
         setMaxCount(+e.currentTarget.value)
     }
 
-
-    const onClickHandler = () => {
+    const setNewValues = () => {
         setCount(minCount)
         setDisabledDisplay(false)
     }
 
-
     return (
         <>
-            <div className="container">
-                <Display count={count} maxCount={maxCount} disabledDisplay={disabledDisplay} error={error} errMessage={errMessage}/>
-                {/*{count >= 5 && <div className={'err'}>Error</div> }*/}
-                <div className={'btn-container'}>
-                    <SuperButton name={'Inc'} callBack={inc} isDisable={isDisableIcn}/>
-                    <SuperButton name={'Reset'} callBack={reset} isDisable={isDisableReset}/>
-                </div>
-            </div>
-            <div className={'setting'}>
-                <h2>Settings</h2>
-                {error ? <div className={'err'}>{errMessage}</div> : ''}
-                <div>
-                    Start count:<input value={minCount} onChange={setMinInputCount}  className={`input ${error ? 'input_error' : ''}`} type="number"/>
-                </div>
-                <div>
-                    Max count:<input value={maxCount} onChange={setMaxInputCount} className={`input ${error ? 'input_error' : ''}`} type="number"/>
-                </div>
-                <div className={'btn-container'}>
-                    <SuperButton name={'Set'} callBack={onClickHandler} isDisable={isDisableSet}/>
-                </div>
-            </div>
+            <Counter error={error}
+                     count={count}
+                     disabledDisplay={disabledDisplay}
+                     reset={reset}
+                     errMessage={errMessage}
+                     inc={inc}
+                     isDisableIcn={isDisableIcn}
+                     isDisableReset={isDisableReset}
+                     maxCount={maxCount}/>
+            <Setting maxCount={maxCount}
+                     minCount={minCount}
+                     isDisableSet={isDisableSet}
+                     setMaxInputCount={setMaxInputCount}
+                     setMinInputCount={setMinInputCount}
+                     errorInputClass={errorInputClass}
+                     setNewValues={setNewValues}/>
         </>
     );
 }

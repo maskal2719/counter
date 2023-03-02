@@ -7,7 +7,7 @@ type DisplayPropsType = {
     errMessage: string
 }
 export const Display: FC<DisplayPropsType> = ({count, maxCount, disabledDisplay,error,errMessage}) => {
-
+    // {error ? <div className={'err'}>{errMessage}</div> : ''}
     // const finalClassName = `${s.button} + ${xType === 'red' ? s.red : xType === 'secondary' ? s.secondary : s.default} ${disabled ? s.disabled : ''}`;
     return (
         <div className={`display ${count === maxCount ? 'err' : ''}`}>
