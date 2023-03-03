@@ -5,13 +5,15 @@ type DisplayPropsType = {
     disabledDisplay: boolean
     error: boolean
     errMessage: string
+    minCount: number
 }
-export const Display: FC<DisplayPropsType> = ({count, maxCount, disabledDisplay,error,errMessage}) => {
-    // {error ? <div className={'err'}>{errMessage}</div> : ''}
-    // const finalClassName = `${s.button} + ${xType === 'red' ? s.red : xType === 'secondary' ? s.secondary : s.default} ${disabled ? s.disabled : ''}`;
+export const Display: FC<DisplayPropsType> = ({count, maxCount, disabledDisplay,error,errMessage, minCount}) => {
+    const errorClassName = error || count === maxCount ? 'err' :  ''
+    const display = minCount >= maxCount || minCount < 0 ? errMessage : disabledDisplay ? 'Press set btn' : count
+
     return (
-        <div className={`display ${count === maxCount ? 'err' : ''}`}>
-            {disabledDisplay ? 'Press set value' : error ? 'errMessage' : count}
+        <div className={`display ${errorClassName}`}>
+            {display}
         </div>
     );
 };

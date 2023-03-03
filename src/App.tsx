@@ -16,7 +16,6 @@ function App() {
     const isDisableIcn = count >= maxCount || disabledDisplay
     const isDisableReset = count === minCount || disabledDisplay
     const isDisableSet = !disabledDisplay || error
-    const errorInputClass = error ? 'input_error' : '';
 
     const inc = () => {
         if (count < maxCount) {
@@ -28,33 +27,35 @@ function App() {
     }
     const setMinInputCount = (e: ChangeEvent<HTMLInputElement>) => {
         const newMinCount = (+e.currentTarget.value)
+        setCount(0)
         setDisabledDisplay(true)
         newMinCount >= maxCount || newMinCount < 0 ? setError(true) : setError(false)
-        setMinCount(+e.currentTarget.value)
+        setMinCount(newMinCount)
     }
     const setMaxInputCount = (e: ChangeEvent<HTMLInputElement>) => {
         const newMaxCount = (+e.currentTarget.value)
+        setCount(0)
         setDisabledDisplay(true)
         newMaxCount <= minCount || newMaxCount <= 0 ? setError(true) : setError(false)
-        setMaxCount(+e.currentTarget.value)
+        setMaxCount(newMaxCount)
     }
 
     const setNewValues = () => {
         setCount(minCount)
-        localStorage.setItem('minCount',JSON.stringify(minCount))
-        localStorage.setItem('maxCount',JSON.stringify(maxCount))
+        localStorage.setItem('minCount', JSON.stringify(minCount))
+        localStorage.setItem('maxCount', JSON.stringify(maxCount))
         setDisabledDisplay(false)
     }
 
     useEffect(() => {
         let minCountLS = localStorage.getItem('minCount')
         let maxCountLS = localStorage.getItem('maxCount')
-        if(minCountLS && maxCountLS) {
+        if (minCountLS && maxCountLS) {
             setMinCount(JSON.parse(minCountLS))
             setCount(JSON.parse(minCountLS))
             setMaxCount(JSON.parse(maxCountLS))
         }
-    },[])
+    }, [])
 
     return (
         <>
@@ -66,14 +67,15 @@ function App() {
                      inc={inc}
                      isDisableIcn={isDisableIcn}
                      isDisableReset={isDisableReset}
-                     maxCount={maxCount}/>
+                     maxCount={maxCount}
+                     minCount={minCount}
+            />
 
             <Setting maxCount={maxCount}
                      minCount={minCount}
                      isDisableSet={isDisableSet}
                      setMaxInputCount={setMaxInputCount}
                      setMinInputCount={setMinInputCount}
-                     errorInputClass={errorInputClass}
                      setNewValues={setNewValues}/>
         </>
     );
