@@ -51,6 +51,12 @@ button[disabled]{
   border: 2px solid black;
 }
 
+.setting-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .input {
   margin-top: 10px;
   border: none;

@@ -1,3 +1,4 @@
+import Button from '@mui/material/Button';
 import React, {FC} from 'react';
 
 export type SuperButtonPropsType = {
@@ -11,6 +12,6 @@ export const SuperButton: FC<SuperButtonPropsType> = ({name, callBack, isDisable
     }
 
     return (
-        <button className={'btn'} disabled={isDisable} onClick={onclickHandler}>{name}</button>
+        <Button size={"large"} variant={!isDisable ? "contained" : "outlined"} disabled={isDisable} onClick={onclickHandler}>{name}</Button>
     );
 };
