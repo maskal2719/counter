@@ -42,20 +42,8 @@ function App() {
 
     const setNewValues = () => {
         setCount(minCount)
-        localStorage.setItem('minCount', JSON.stringify(minCount))
-        localStorage.setItem('maxCount', JSON.stringify(maxCount))
         setDisabledDisplay(false)
     }
-
-    useEffect(() => {
-        let minCountLS = localStorage.getItem('minCount')
-        let maxCountLS = localStorage.getItem('maxCount')
-        if (minCountLS && maxCountLS) {
-            setMinCount(JSON.parse(minCountLS))
-            setCount(JSON.parse(minCountLS))
-            setMaxCount(JSON.parse(maxCountLS))
-        }
-    }, [])
 
     return (
         <>
