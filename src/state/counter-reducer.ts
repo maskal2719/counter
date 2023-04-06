@@ -2,14 +2,12 @@ export type StateType = {
     count: number
     minCount: number
     maxCount: number
-    error: boolean
     disabledDisplay: boolean
 }
 const initialState: StateType = {
     count: 0,
     minCount: 0,
     maxCount: 5,
-    error: false,
     disabledDisplay: false
 }
 
