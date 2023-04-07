@@ -1,6 +1,9 @@
 import React, {FC} from 'react';
 import {Display} from "../Display/Display";
 import {SuperButton} from "../SuperButton/SuperButton";
+import {useSelector} from "react-redux";
+import {AppRootState} from "../../state/store";
+import {StateType} from "../../state/counter-reducer";
 
 type CounterPropsType = {
     count: number
@@ -16,6 +19,10 @@ type CounterPropsType = {
 }
 
 const Counter:FC<CounterPropsType> = ({count,maxCount,disabledDisplay,errMessage,error,inc,reset,isDisableIcn,isDisableReset, minCount}) => {
+
+    let counter = useSelector<AppRootState, StateType>(state => state.counter)
+    console.log(counter)
+
     return (
         <div className="counter">
             <Display count={count} maxCount={maxCount} disabledDisplay={disabledDisplay} error={error} errMessage={errMessage} minCount={minCount}/>

@@ -2,6 +2,9 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 import './App.css';
 import Counter from "./components/Counter/Counter";
 import Setting from "./components/Setting/Setting";
+import {useSelector} from "react-redux";
+import {AppRootState} from "./state/store";
+import {StateType} from "./state/counter-reducer";
 
 function App() {
 
@@ -16,6 +19,8 @@ function App() {
     const isDisableIcn = count >= maxCount || disabledDisplay
     const isDisableReset = count === minCount || disabledDisplay
     const isDisableSet = !disabledDisplay || error
+
+
 
     const inc = () => {
         if (count < maxCount) {

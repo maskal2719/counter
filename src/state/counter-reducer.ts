@@ -11,7 +11,7 @@ const initialState: StateType = {
     disabledDisplay: false
 }
 
-export const counterReducer = (state: StateType = initialState, action: ActionsType) : StateType => {
+export const counterReducer = (state: StateType = initialState, action: ActionsType): StateType => {
     switch (action.type) {
         case "INCREMENT-COUNTER": {
             return {
@@ -33,6 +33,14 @@ export const counterReducer = (state: StateType = initialState, action: ActionsT
                 ...state, minCount: action.payload.newMinValue
             }
         }
+        case "DISABLED_DISPLAY": {
+            return {
+                ...state, disabledDisplay: state.disabledDisplay
+            }
+        }
+        default : {
+            return state
+        }
     }
 }
 
@@ -41,12 +49,14 @@ export type ActionsType =
     | ResetCounterActionType
     | MinCounterValueActionType
     | MaxCounterValueActionType
+    | DisabledDisplayActionType
 
 
 type IncrementCounterActionType = ReturnType<typeof incrementCounterAC>
 type ResetCounterActionType = ReturnType<typeof resetCounterAC>
 type MinCounterValueActionType = ReturnType<typeof minCounterValueAC>
 type MaxCounterValueActionType = ReturnType<typeof maxCounterValueAC>
+type DisabledDisplayActionType = ReturnType<typeof disabledDisplayAC>
 const incrementCounterAC = () => {
     return {
         type: 'INCREMENT-COUNTER'
@@ -71,5 +81,11 @@ const maxCounterValueAC = (newMaxValue: number) => {
         payload: {
             newMaxValue
         }
+    } as const
+}
+
+const disabledDisplayAC = () => {
+    return {
+        type: 'DISABLED_DISPLAY',
     } as const
 }
