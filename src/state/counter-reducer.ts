@@ -13,7 +13,7 @@ const initialState: StateType = {
 
 export const counterReducer = (state: StateType = initialState, action: ActionsType): StateType => {
     switch (action.type) {
-        case "INCREMENT-COUNTER": {
+        case "INCREMENT_COUNTER": {
             return {
                 ...state, count: state.count + 1
             }
@@ -35,7 +35,12 @@ export const counterReducer = (state: StateType = initialState, action: ActionsT
         }
         case "DISABLED_DISPLAY": {
             return {
-                ...state, disabledDisplay: state.disabledDisplay
+                ...state, disabledDisplay: action.payload.value
+            }
+        }
+        case "SET_SETTING": {
+            return {
+                ...state, count : action.payload.value
             }
         }
         default : {
@@ -50,6 +55,7 @@ export type ActionsType =
     | MinCounterValueActionType
     | MaxCounterValueActionType
     | DisabledDisplayActionType
+    | NewSettingActionType
 
 
 type IncrementCounterActionType = ReturnType<typeof incrementCounterAC>
@@ -57,17 +63,18 @@ type ResetCounterActionType = ReturnType<typeof resetCounterAC>
 type MinCounterValueActionType = ReturnType<typeof minCounterValueAC>
 type MaxCounterValueActionType = ReturnType<typeof maxCounterValueAC>
 type DisabledDisplayActionType = ReturnType<typeof disabledDisplayAC>
-const incrementCounterAC = () => {
+type NewSettingActionType = ReturnType<typeof newSettingAC>
+export const incrementCounterAC = () => {
     return {
-        type: 'INCREMENT-COUNTER'
+        type: 'INCREMENT_COUNTER'
     } as const
 }
-const resetCounterAC = () => {
+export const resetCounterAC = () => {
     return {
         type: 'RESET'
     } as const
 }
-const minCounterValueAC = (newMinValue: number) => {
+export const minCounterValueAC = (newMinValue: number) => {
     return {
         type: 'MIN_COUNTER_VALUE',
         payload: {
@@ -75,7 +82,7 @@ const minCounterValueAC = (newMinValue: number) => {
         }
     } as const
 }
-const maxCounterValueAC = (newMaxValue: number) => {
+export const maxCounterValueAC = (newMaxValue: number) => {
     return {
         type: 'MAX_COUNTER_VALUE',
         payload: {
@@ -84,8 +91,20 @@ const maxCounterValueAC = (newMaxValue: number) => {
     } as const
 }
 
-const disabledDisplayAC = () => {
+export const disabledDisplayAC = (value: boolean) => {
     return {
         type: 'DISABLED_DISPLAY',
+        payload: {
+            value
+        }
+    } as const
+}
+
+export const newSettingAC = (value: number) => {
+    return {
+        type: 'SET_SETTING',
+        payload: {
+            value
+        }
     } as const
 }

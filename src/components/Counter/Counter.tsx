@@ -1,27 +1,37 @@
 import React, {FC} from 'react';
 import {Display} from "../Display/Display";
 import {SuperButton} from "../SuperButton/SuperButton";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "../../state/store";
-import {StateType} from "../../state/counter-reducer";
+import {incrementCounterAC, resetCounterAC, StateType} from "../../state/counter-reducer";
 
 type CounterPropsType = {
-    count: number
-    maxCount: number
-    disabledDisplay: boolean
     error: boolean
     errMessage: string
-    inc: ()=> void
-    reset: () => void
-    isDisableIcn: boolean
-    isDisableReset: boolean
-    minCount: number
 }
 
-const Counter:FC<CounterPropsType> = ({count,maxCount,disabledDisplay,errMessage,error,inc,reset,isDisableIcn,isDisableReset, minCount}) => {
+const Counter:FC<CounterPropsType> = ({error, errMessage}) => {
 
-    let counter = useSelector<AppRootState, StateType>(state => state.counter)
-    console.log(counter)
+    const state = useSelector<AppRootState, StateType>(state => state.counter)
+    const dispatch = useDispatch()
+
+    let count = state.count
+    let maxCount = state.maxCount
+    let disabledDisplay = state.disabledDisplay
+    let minCount = state.minCount
+
+    const isDisableIcn = count >= maxCount || disabledDisplay
+    const isDisableReset = count === minCount || disabledDisplay
+
+    const inc = () => {
+        if (count < maxCount) {
+            dispatch(incrementCounterAC())
+        }
+    }
+    const reset = () => {
+        dispatch(resetCounterAC())
+    }
+
 
     return (
         <div className="counter">
