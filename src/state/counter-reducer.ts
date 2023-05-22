@@ -1,15 +1,11 @@
-export type StateType = {
-    count: number
-    minCount: number
-    maxCount: number
-    disabledDisplay: boolean
-}
-const initialState: StateType = {
+const initialState = {
     count: 0,
     minCount: 0,
     maxCount: 5,
     disabledDisplay: false
 }
+
+export type StateType = typeof initialState
 
 export const counterReducer = (state: StateType = initialState, action: ActionsType): StateType => {
     switch (action.type) {
@@ -40,7 +36,7 @@ export const counterReducer = (state: StateType = initialState, action: ActionsT
         }
         case "SET_SETTING": {
             return {
-                ...state, count : action.payload.value
+                ...state, count: action.payload.value
             }
         }
         default : {
@@ -90,7 +86,6 @@ export const maxCounterValueAC = (newMaxValue: number) => {
         }
     } as const
 }
-
 export const disabledDisplayAC = (value: boolean) => {
     return {
         type: 'DISABLED_DISPLAY',
@@ -99,7 +94,6 @@ export const disabledDisplayAC = (value: boolean) => {
         }
     } as const
 }
-
 export const newSettingAC = (value: number) => {
     return {
         type: 'SET_SETTING',

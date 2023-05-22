@@ -10,7 +10,7 @@ type CounterPropsType = {
     errMessage: string
 }
 
-const Counter:FC<CounterPropsType> = ({error, errMessage}) => {
+const Counter: FC<CounterPropsType> = ({error, errMessage}) => {
 
     const state = useSelector<AppRootState, StateType>(state => state.counter)
     const dispatch = useDispatch()
@@ -35,7 +35,8 @@ const Counter:FC<CounterPropsType> = ({error, errMessage}) => {
 
     return (
         <div className="counter">
-            <Display count={count} maxCount={maxCount} disabledDisplay={disabledDisplay} error={error} errMessage={errMessage} minCount={minCount}/>
+            <Display count={count} maxCount={maxCount} disabledDisplay={disabledDisplay} error={error}
+                     errMessage={errMessage} minCount={minCount}/>
             <div className={'btn-container'}>
                 <SuperButton name={'Inc'} callBack={inc} isDisable={isDisableIcn}/>
                 <SuperButton name={'Reset'} callBack={reset} isDisable={isDisableReset}/>
